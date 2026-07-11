@@ -29,8 +29,3 @@ class PublicHabitListView(generics.ListAPIView):
     serializer_class = HabitSerializer
     permission_classes = [IsAuthenticated]
     queryset = Habit.objects.filter(is_public=True)
-
-
-from django.shortcuts import render
-
-# Create your views here.
