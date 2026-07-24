@@ -4,26 +4,32 @@
 
 ## Стек
 
-- Python 3.14
+- Python 3.12
 - Django 6.0
 - Django REST Framework
 - PostgreSQL
-- Celery + Redis
+- Redis
+- Celery + Celery Beat
 - Telegram Bot API
-- drf-spectacular
+- Nginx
+- Docker + Docker Compose
+- GitHub Actions
 
-## Установка
+## Запуск локально
 
-1. Клонировать репозиторий и перейти в папку
-2. Установить зависимости: poetry install
-3. Создать .env файл по шаблону .env.template и заполнить переменные
-4. Применить миграции: python manage.py migrate
-5. Запустить сервер: python manage.py runserver
+1. Клонировать репозиторий:
+   git clone https://github.com/KirlRj/coursework_5.git
+   cd coursework_5
 
-## Запуск Celery
+2. Создать .env файл по шаблону .env.template и заполнить переменные
 
-celery -A config worker --loglevel=info
-celery -A config beat --loglevel=info
+3. Запустить проект:
+   docker compose up --build
+
+4. Применить миграции (в отдельном терминале):
+   docker compose exec web python manage.py migrate
+
+5. Приложение доступно на http://localhost/
 
 ## Переменные окружения
 
@@ -37,8 +43,8 @@ TELEGRAM_BOT_TOKEN — токен Telegram бота
 
 ## API Документация
 
-Swagger UI: http://localhost:8000/api/docs/
-ReDoc: http://localhost:8000/api/redoc/
+Swagger UI: http://localhost/api/docs/
+ReDoc: http://localhost/api/redoc/
 
 ## Эндпоинты
 
@@ -54,7 +60,28 @@ PUT    /habits/<id>/           — Обновление привычки
 DELETE /habits/<id>/           — Удаление привычки
 GET    /habits/public/         — Публичные привычки
 
-## Тесты
+## Тесты и линтинг
 
 python manage.py test
-coverage run manage.py test && coverage report
+flake8 habits users config --max-line-length=119
+
+## CI/CD
+
+При каждом push в ветки main или feature_2 GitHub Actions автоматически:
+1. Запускает тесты и линтинг
+2. Проверяет сборку Docker образов
+3. Деплоит проект на сервер
+
+### Настройка деплоя
+
+Добавь секреты в GitHub Settings -> Secrets -> Actions:
+- SERVER_HOST — IP адрес сервера
+- SERVER_USER — пользователь сервера
+- SERVER_KEY — приватный SSH ключ
+
+## Остановка проекта
+
+docker compose down
+
+Для удаления данных:
+docker compose down -v
