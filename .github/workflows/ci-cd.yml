@@ -52,7 +52,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Lint
-        run: flake8 habits users config --max-line-length=119
+        run: flake8 habits users config
 
       - name: Run tests
         run: python manage.py test
