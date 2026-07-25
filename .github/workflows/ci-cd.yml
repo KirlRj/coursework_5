@@ -79,5 +79,5 @@ jobs:
           script: |
             cd coursework_5
             git pull origin feature_2
-            docker compose up -d --build
-            docker compose exec -T web python manage.py migrate
+            docker-compose up -d --build
+            docker-compose exec -T web python manage.py migrate
