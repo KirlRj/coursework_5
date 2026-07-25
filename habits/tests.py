@@ -180,8 +180,3 @@ class HabitAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("results", response.data)
         self.assertLessEqual(len(response.data["results"]), 5)
-
-
-from django.test import TestCase
-
-# Create your tests here.

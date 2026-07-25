@@ -56,8 +56,3 @@ class UserAPITestCase(APITestCase):
         response = self.client.patch(url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["telegram_chat_id"], "123456789")
-
-
-from django.test import TestCase
-
-# Create your tests here.

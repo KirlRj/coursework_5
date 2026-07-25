@@ -14,10 +14,10 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+from celery.schedules import crontab
 from dotenv import load_dotenv
 
 load_dotenv()
-from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,7 +32,7 @@ SECRET_KEY = "django-insecure-oqbz=o-q-zaw=&vr@c-v^8m@hq1_w=4_1bhwi%(f^%amt4@@o5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -171,6 +171,3 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": crontab(minute="*"),  # каждую минуту
     },
 }
-
-
-
